@@ -10,6 +10,7 @@
 
 
 ## Comments Best Practices
+
 - **When to comment:** Add comments sparingly. Focus on *why* something is done, especially for complex logic, rather than *what* is done. Only add high-value comments if necessary for clarity.
 
 - **How comments should look:** Comments should be concise, clear, and directly relevant to the code. Avoid redundant comments that just re-state the obvious. Do not use comments to talk to the user or describe changes.
