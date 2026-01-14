@@ -5,4 +5,4 @@
 | `claude-commands/*.md` | `~/.claude/commands/*.md` |
 | `.zprofile` | `~/.zprofile` (base configuration) |
 | `.zprofile_branch` | `~/.zprofile` (work-specific configuration - needs to be merged with base) |
-| `warp/themes` | `~/.warp/themes` |
+| `warp/themes/*` | `~/.warp/themes/*` |
