@@ -6,3 +6,7 @@
 | `.zprofile` | `~/.zprofile` (base configuration) |
 | `.zprofile_branch` | `~/.zprofile` (work-specific configuration - needs to be merged with base) |
 | `warp/themes/*` | `~/.warp/themes/*` |
+
+### Misc. Tooling
+
+- [QLMarkdown: Quick Look for Markdown](https://github.com/sbarex/QLMarkdown)
