@@ -6,9 +6,6 @@
 
 - Use the context7 MCP to look up library documentation before searching the web, use web search as a fallback. If you get irrelevant results in your first 2 tries with context7, fall back to web search.
 
-- Use `git town propose` to create pull requests on GitHub. This opens the pull request page in a web browser automatically for convenience.
-
-
 ## Comments Best Practices
 
 - **When to comment:** Add comments sparingly. Focus on *why* something is done, especially for complex logic, rather than *what* is done. Only add high-value comments if necessary for clarity.
