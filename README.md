@@ -6,6 +6,7 @@
 | `.zprofile` | `~/.zprofile` (base configuration) |
 | `.zprofile_branch` | `~/.zprofile` (work-specific configuration - needs to be merged with base) |
 | `ghostty_config` | `~/.config/ghostty/config` |
+| `ghostty_themes` | `~/.config/ghostty/themes` |
 
 ### Misc. Tooling
 

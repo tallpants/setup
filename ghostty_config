@@ -21,4 +21,4 @@ keybind = opt+backspace=text:\x17
 
 auto-update = check
 
-theme = VSCode Dark Modern
+theme = VS Code Dark Modern
