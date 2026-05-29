@@ -74,7 +74,7 @@ rl_color() {
 RL_SECTION=""
 if [ "$RL_HAS" = "true" ]; then
   RL_5H_FMT="$(rl_color "$RL_5H_PCT")5H:${RL_5H_PCT}%-$(fmt_reset "$RL_5H_RESET")${RESET}"
-  RL_7D_FMT="$(rl_color "$RL_7D_PCT")7H:${RL_7D_PCT}%-$(fmt_reset "$RL_7D_RESET")${RESET}"
+  RL_7D_FMT="$(rl_color "$RL_7D_PCT")7D:${RL_7D_PCT}%-$(fmt_reset "$RL_7D_RESET")${RESET}"
   RL_SECTION=" | ${RL_5H_FMT} ${RL_7D_FMT}"
 fi
 
