@@ -11,5 +11,8 @@
   "subagentStatusLine": {
     "type": "command",
     "command": "~/.claude/subagent-statusline.sh"
+  },
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1"
   }
 }
