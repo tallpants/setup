@@ -29,7 +29,6 @@ shrink_path() {
   echo "${prefix}${result}"
 }
 DIR_SHORT=$(shrink_path "$DIR")
-COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
 PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
 TOKENS=$(echo "$input" | jq -r '[.context_window.current_usage.input_tokens, .context_window.current_usage.cache_creation_input_tokens, .context_window.current_usage.cache_read_input_tokens] | map(. // 0) | add')
 RL_HAS=$(echo "$input" | jq -r '(.rate_limits.five_hour.resets_at // .rate_limits.seven_day.resets_at) != null')
@@ -45,9 +44,13 @@ if [ "$PCT" -ge 90 ]; then BAR_COLOR="$RED"
 elif [ "$PCT" -ge 70 ]; then BAR_COLOR="$YELLOW"
 else BAR_COLOR="$GREEN"; fi
 
-FILLED=$((PCT / 10)); EMPTY=$((10 - FILLED))
-printf -v FILL "%${FILLED}s"; printf -v PAD "%${EMPTY}s"
-BAR="${FILL// /█}${PAD// /░}"
+make_bar() {
+  local pct=$1 filled empty fill pad
+  filled=$((pct / 10)); empty=$((10 - filled))
+  printf -v fill "%${filled}s"; printf -v pad "%${empty}s"
+  echo "${fill// /█}${pad// /░}"
+}
+BAR=$(make_bar "$PCT")
 
 if [ "$TOKENS" -ge 1000 ]; then
   TOKENS_FMT=$(awk -v t="$TOKENS" 'BEGIN{printf "%.1fk", t/1000}')
@@ -73,15 +76,14 @@ rl_color() {
 
 RL_SECTION=""
 if [ "$RL_HAS" = "true" ]; then
-  RL_5H_FMT="$(rl_color "$RL_5H_PCT")5H:${RL_5H_PCT}%-$(fmt_reset "$RL_5H_RESET")${RESET}"
-  RL_7D_FMT="$(rl_color "$RL_7D_PCT")7D:${RL_7D_PCT}%-$(fmt_reset "$RL_7D_RESET")${RESET}"
-  RL_SECTION=" | ${RL_5H_FMT} ${RL_7D_FMT}"
+  RL_5H_BAR=$(make_bar "$RL_5H_PCT"); RL_7D_BAR=$(make_bar "$RL_7D_PCT")
+  RL_5H_FMT="5H: $(rl_color "$RL_5H_PCT")${RL_5H_BAR}${RESET} ${RL_5H_PCT}% ($(fmt_reset "$RL_5H_RESET"))"
+  RL_7D_FMT="7D: $(rl_color "$RL_7D_PCT")${RL_7D_BAR}${RESET} ${RL_7D_PCT}% ($(fmt_reset "$RL_7D_RESET"))"
+  RL_SECTION=" | ${RL_5H_FMT} | ${RL_7D_FMT}"
 fi
 
 BRANCH=""
 git rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌳 $(git branch --show-current 2>/dev/null)"
 
-COST_FMT=$(printf '$%.2f' "$COST")
 echo -e "📁 ${DIR_SHORT}$BRANCH"
-# echo -e "${CYAN}$MODEL${RESET} | ${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%) | ${YELLOW}${COST_FMT}${RESET}"
-echo -e "${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%) | ${YELLOW}${COST_FMT}${RESET}${RL_SECTION}"
+echo -e "Context: ${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%)${RL_SECTION}"
