@@ -1,0 +1,132 @@
+personality = "friendly"
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+check_for_update_on_startup = false
+notify = ["/Users/adithya/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+approvals_reviewer = "auto_review"
+
+[features]
+hooks = true
+memories = true
+js_repl = false
+terminal_resize_reflow = true
+
+[notice]
+hide_full_access_warning = true
+
+[hooks.state]
+
+[hooks.state."/Users/adithya/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:0c45a6360a8747b762735b2185edd9a43c0747d1266f28dad4ea71b92251e52f"
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[projects."/Users/adithya/Projects/Branch/branch"]
+trust_level = "trusted"
+
+[projects."/Users/adithya/Projects/Mine/dates"]
+trust_level = "trusted"
+
+[projects."/Users/adithya/Projects/Mine/pwgen"]
+trust_level = "trusted"
+
+[projects."/Users/adithya"]
+trust_level = "trusted"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-16T15:46:03Z"
+source_type = "local"
+source = "/Users/adithya/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-15T01:26:38Z"
+source_type = "local"
+source = "/Users/adithya/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = true
+usePointerCursors = true
+sansFontSize = 14
+show-context-window-usage = true
+git-branch-prefix = "tallpants/codex/"
+git-show-sidebar-pr-icons = true
+appearanceDiffMarkerStyle = "color"
+
+[desktop.appearanceLightChromeTheme]
+accent = "#339cff"
+contrast = 45
+ink = "#1a1c1f"
+opaqueWindows = false
+surface = "#ffffff"
+
+[desktop.appearanceLightChromeTheme.fonts]
+code = "Hack"
+
+[desktop.appearanceLightChromeTheme.semanticColors]
+diffAdded = "#00a240"
+diffRemoved = "#ba2623"
+skill = "#924ff7"
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#339cff"
+contrast = 60
+ink = "#ffffff"
+opaqueWindows = false
+surface = "#181818"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = "Hack"
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#40c977"
+diffRemoved = "#fa423e"
+skill = "#ad7bf9"
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/adithya/.codex"
+CODEX_HOME = "/Users/adithya/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "89809670b247cbaffbc4f87d9fa9742a9038c0f4a06fb822d7f85ff19bf24215"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.609.71450"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+
+[tui]
+alternate_screen = "always"
+status_line = ["current-dir", "git-branch", "context-used", "used-tokens", "five-hour-limit", "weekly-limit"]
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
