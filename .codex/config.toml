@@ -16,11 +16,6 @@ terminal_resize_reflow = true
 [notice]
 hide_full_access_warning = true
 
-[hooks.state]
-
-[hooks.state."/Users/adithya/.codex/hooks.json:stop:0:0"]
-trusted_hash = "sha256:0c45a6360a8747b762735b2185edd9a43c0747d1266f28dad4ea71b92251e52f"
-
 [memories]
 generate_memories = true
 use_memories = true
@@ -35,6 +30,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/adithya"]
+trust_level = "trusted"
+
+[projects."/Users/adithya/Documents/Codex/2026-06-16/i-installed-plannotator-with-this-script"]
 trust_level = "trusted"
 
 [marketplaces.openai-bundled]
