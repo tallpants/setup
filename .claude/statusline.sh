@@ -85,5 +85,40 @@ fi
 BRANCH=""
 git rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌳 $(git branch --show-current 2>/dev/null)"
 
-echo -e "📁 ${DIR_SHORT}$BRANCH"
+# Active Doppler config for the current dir, mirroring the `sorindoppler` zsh
+# prompt theme: find the longest path-prefix scope in ~/.doppler/.doppler.yaml
+# and show "<enclave.project>/<enclave.config>". Absent when no scope matches.
+DOPPLER=""
+DOPPLER_YAML="$HOME/.doppler/.doppler.yaml"
+if [ -r "$DOPPLER_YAML" ]; then
+  DOPPLER_INFO=$(awk -v pwd="$DIR" '
+    /^    \// {
+      key = $0
+      sub(/^    /, "", key)
+      sub(/:$/, "", key)
+      current_key = key
+      # Match exact dir or any descendant. Excludes the bare "/" scope, which
+      # is not a real prefix match (no "//" at start of pwd).
+      if (key == pwd || index(pwd "/", key "/") == 1) {
+        matches[key] = 1
+      }
+      next
+    }
+    current_key in matches && /enclave\.project:/ { proj[current_key] = $2 }
+    current_key in matches && /enclave\.config:/  { cfg[current_key]  = $2 }
+    END {
+      best = ""
+      for (k in matches) {
+        if (length(k) > length(best)) best = k
+      }
+      if (best == "") exit
+      if ((best in proj) && (best in cfg)) print proj[best] "/" cfg[best]
+      else if (best in proj) print proj[best]
+      else if (best in cfg)  print cfg[best]
+    }
+  ' "$DOPPLER_YAML")
+  [ -n "$DOPPLER_INFO" ] && DOPPLER=" | ⚙️ ${DOPPLER_INFO}"
+fi
+
+echo -e "📁 ${DIR_SHORT}$BRANCH$DOPPLER"
 echo -e "Context: ${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%)${RL_SECTION}"

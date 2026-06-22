@@ -1,0 +1,186 @@
+#
+# A fork of the sorin theme that adds the active Doppler enclave config.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Adithya (doppler segment)
+#
+
+# Load dependencies.
+pmodload 'helper'
+
+function prompt_sorindoppler_async_callback {
+  case $1 in
+    prompt_sorindoppler_async_git)
+      IFS=':' read _git_target _git_post_target <<<"$3"
+      _git_target=$(coalesce ${(@)${(z)_git_target}})
+
+      if [[ -z "$_git_target" ]]; then
+        if [[ -n "$_prompt_sorindoppler_git" ]]; then
+          _prompt_sorindoppler_git=''
+          zle && zle reset-prompt
+        fi
+      else
+        _prompt_sorindoppler_git="${_git_target}${_git_post_target}"
+        zle && zle reset-prompt
+      fi
+      ;;
+    "[async]")
+      if [[ $2 -eq 2 ]]; then
+          typeset -g prompt_prezto_async_init=0
+      fi
+      ;;
+  esac
+}
+
+function prompt_sorindoppler_async_git {
+  cd -q "$1"
+  if (( $+functions[git-info] )); then
+    git-info
+    print ${git_info[status]}
+  fi
+}
+
+function prompt_sorindoppler_async_tasks {
+  if (( !${prompt_prezto_async_init:-0} )); then
+    async_start_worker prompt_sorindoppler -n
+    async_register_callback prompt_sorindoppler prompt_sorindoppler_async_callback
+    typeset -g prompt_prezto_async_init=1
+  fi
+
+  async_flush_jobs prompt_sorindoppler
+
+  async_job prompt_sorindoppler prompt_sorindoppler_async_git "$PWD"
+}
+
+# Find the longest prefix of $PWD in ~/.doppler/.doppler.yaml and emit
+# "<enclave.project>/<enclave.config>" for the matched scope.
+function prompt_sorindoppler_doppler_info {
+  local yaml="$HOME/.doppler/.doppler.yaml"
+  if [[ ! -r $yaml ]]; then
+    _prompt_sorindoppler_doppler=''
+    return
+  fi
+
+  local result
+  result=$(awk -v pwd="$PWD" '
+    /^    \// {
+      key = $0
+      sub(/^    /, "", key)
+      sub(/:$/, "", key)
+      current_key = key
+      # Match exact dir or any descendant. Excludes the bare "/" scope, which
+      # is not a real prefix match (no "//" at start of pwd).
+      if (key == pwd || index(pwd "/", key "/") == 1) {
+        matches[key] = 1
+      }
+      next
+    }
+    current_key in matches && /enclave\.project:/ { proj[current_key] = $2 }
+    current_key in matches && /enclave\.config:/  { cfg[current_key]  = $2 }
+    END {
+      best = ""
+      for (k in matches) {
+        if (length(k) > length(best)) best = k
+      }
+      if (best == "") exit
+      if ((best in proj) && (best in cfg)) print proj[best] "/" cfg[best]
+      else if (best in proj) print proj[best]
+      else if (best in cfg)  print cfg[best]
+    }
+  ' "$yaml")
+
+  if [[ -n $result ]]; then
+    _prompt_sorindoppler_doppler=" %F{5}⚙ ${result}%f"
+  else
+    _prompt_sorindoppler_doppler=''
+  fi
+}
+
+function prompt_sorindoppler_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  _prompt_sorindoppler_pwd=$(prompt-pwd)
+
+  if (( $+functions[git-dir] )); then
+    local new_git_root="$(git-dir 2> /dev/null)"
+    if [[ $new_git_root != $_sorindoppler_cur_git_root ]]; then
+      _prompt_sorindoppler_git=''
+      _sorindoppler_cur_git_root=$new_git_root
+    fi
+  fi
+
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
+
+  prompt_sorindoppler_doppler_info
+
+  prompt_sorindoppler_async_tasks
+}
+
+function prompt_sorindoppler_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent sp subst)
+
+  autoload -Uz add-zsh-hook
+  autoload -Uz async && async
+
+  add-zsh-hook precmd prompt_sorindoppler_precmd
+
+  zstyle ':prezto:module:prompt' managed 'yes'
+
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{7}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format ' %B%F{1}❯%F{3}❯%F{2}❯%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format ' %F{3}♺%f'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format ' %B%F{2}❮%F{3}❮%F{1}❮%f%b'
+
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:action' format '%F{7}:%f%%B%F{9}%s%f%%b'
+  zstyle ':prezto:module:git:info:added' format ' %%B%F{2}✚%f%%b'
+  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{13}⬆%f%%b'
+  zstyle ':prezto:module:git:info:behind' format ' %%B%F{13}⬇%f%%b'
+  zstyle ':prezto:module:git:info:branch' format ' %%B%F{2}%b%f%%b'
+  zstyle ':prezto:module:git:info:commit' format ' %%B%F{3}%.7c%f%%b'
+  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{1}✖%f%%b'
+  zstyle ':prezto:module:git:info:modified' format ' %%B%F{4}✱%f%%b'
+  zstyle ':prezto:module:git:info:position' format ' %%B%F{13}%p%f%%b'
+  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{5}➜%f%%b'
+  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{6}✭%f%%b'
+  zstyle ':prezto:module:git:info:unmerged' format ' %%B%F{3}═%f%%b'
+  zstyle ':prezto:module:git:info:untracked' format ' %%B%F{7}◼%f%%b'
+  zstyle ':prezto:module:git:info:keys' format \
+    'status' '%b %p %c:%s%A%B%S%a%d%m%r%U%u'
+
+  zstyle ':prezto:module:python:info:virtualenv' format '%f%F{3}(%v)%F{7} '
+
+  local show_return="✘ "
+  if zstyle -T ':prezto:module:prompt' show-return-val; then
+    show_return+='%? '
+  fi
+
+  _sorindoppler_cur_git_root=''
+  _prompt_sorindoppler_git=''
+  _prompt_sorindoppler_pwd=''
+  _prompt_sorindoppler_doppler=''
+
+  PROMPT='${SSH_TTY:+"%F{9}%n%f%F{7}@%f%F{3}%m%f "}%F{4}${_prompt_sorindoppler_pwd}%(!. %B%F{1}#%f%b.)${editor_info[keymap]} '
+  RPROMPT='$python_info[virtualenv]${editor_info[overwrite]}%(?:: %F{1}'
+  RPROMPT+=${show_return}
+  RPROMPT+='%f)${VIM:+" %B%F{6}V%f%b"}${_prompt_sorindoppler_git}${_prompt_sorindoppler_doppler}'
+  SPROMPT='zsh: correct %F{1}%R%f to %F{2}%r%f [nyae]? '
+}
+
+function prompt_sorindoppler_preview {
+  local +h PROMPT=''
+  local +h RPROMPT=''
+  local +h SPROMPT=''
+
+  editor-info 2> /dev/null
+  prompt_preview_theme 'sorindoppler'
+}
+
+prompt_sorindoppler_setup "$@"
+# vim: ft=zsh
