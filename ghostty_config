@@ -1,4 +1,4 @@
-font-family = Cascadia Code
+font-family = Hack
 font-size = 12
 font-feature = -calt,-liga,-dlig
 font-thicken = true
@@ -18,12 +18,12 @@ unfocused-split-opacity = 0.5
 
 mouse-scroll-multiplier = 1
 
-# Play nice when SSHing into hosts that don't know `xterm-ghostty` in terminfo
-shell-integration-features = ssh-env,ssh-terminfo
-
 # macOS natural text editing
 keybind = opt+backspace=text:\x17
 
+# Play nice when SSHing into hosts that don't know `xterm-ghostty` in terminfo
+shell-integration-features = ssh-env,ssh-terminfo
+
 auto-update = check
 
-theme = VS Code Dark Modern
+theme = dark:VS Code Dark Modern,light:GitHub Light Default
