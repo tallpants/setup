@@ -13,4 +13,3 @@
 
 - [QLMarkdown: Quick Look for Markdown](https://github.com/sbarex/QLMarkdown)
 - [Prezto: zsh configuration framework](https://github.com/sorin-ionescu/prezto) - `~/.zprezto` is an upstream clone; only the customizations above are tracked here
-- [safe-chain: npm/yarn malware protection](https://github.com/AikidoSec/safe-chain) - installs its own `source ~/.safe-chain/scripts/init-posix.sh` line into `~/.zshrc`
