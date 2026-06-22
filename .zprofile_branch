@@ -1,11 +1,14 @@
-# Node.js 22 from Homebrew
-export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+# Node.js 24 from Homebrew
+export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
 
 # Ruby from Homebrew
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # Gems installed with Ruby from Homebrew
 export PATH="$(gem env gemdir)/bin:$PATH"
+
+# libpq (Postgres CLI tools) from Homebrew
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # Android and Java for Android
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home"

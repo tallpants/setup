@@ -1,0 +1,50 @@
+# Customizations made on top of the stock Prezto ~/.zpreztorc template.
+#
+# Prezto regenerates ~/.zpreztorc from its own template (`~/.zprezto/runcoms/zpreztorc`)
+# on install, and that template changes between Prezto versions. So rather than
+# vendoring the whole file, only the deltas below are tracked. After a fresh
+# Prezto install, apply each block to the matching section of ~/.zpreztorc.
+
+# --- Modules ---------------------------------------------------------------
+# Replace the `zstyle ':prezto:load' pmodule` list with the following. Added
+# 'git' and 'node'; added 'autosuggestions' and 'syntax-highlighting' right
+# before 'prompt'. Order matters: syntax-highlighting must load before prompt.
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'git' \
+  'node' \
+  'completion' \
+  'history-substring-search' \
+  'autosuggestions' \
+  'syntax-highlighting' \
+  'prompt' \
+
+# --- Git -------------------------------------------------------------------
+# Don't define Prezto's git aliases (they collide with my own / muscle memory).
+zstyle ':prezto:module:git:alias' skip 'yes'
+
+# --- Prompt ----------------------------------------------------------------
+# Custom sorin fork that appends the active Doppler config. The theme file
+# itself lives at prompt_sorindoppler_setup in this repo and must be copied to
+# ~/.zprezto/modules/prompt/functions/ for this to resolve.
+zstyle ':prezto:module:prompt' theme 'sorindoppler'
+
+# --- Syntax highlighting ---------------------------------------------------
+# Enable the zsh-syntax-highlighting highlighters (commented out by default).
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'line' \
+  'cursor' \
+  'root'
+
+# --- Terminal --------------------------------------------------------------
+# Auto-set the terminal window/tab title.
+zstyle ':prezto:module:terminal' auto-title 'yes'
