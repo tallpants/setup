@@ -1,4 +1,5 @@
 {
+  "deepLinkTerminal": "Ghostty",
   "mcpServers": {
     "context7": {
       "type": "http",
