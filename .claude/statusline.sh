@@ -38,17 +38,28 @@ RL_7D_PCT=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // 0' 
 RL_7D_RESET=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // 0')
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; RESET='\033[0m'
+TRACK='\033[48;5;238m'  # bar track (unfilled) background
 
 # Pick bar color based on context usage
 if [ "$PCT" -ge 90 ]; then BAR_COLOR="$RED"
 elif [ "$PCT" -ge 70 ]; then BAR_COLOR="$YELLOW"
 else BAR_COLOR="$GREEN"; fi
 
+# Render a 10-cell bar with eighth-block sub-cell resolution, so usage below
+# 10% still shows a partial block instead of flooring to an empty bar.
 make_bar() {
-  local pct=$1 filled empty fill pad
-  filled=$((pct / 10)); empty=$((10 - filled))
-  printf -v fill "%${filled}s"; printf -v pad "%${empty}s"
-  echo "${fill// /█}${pad// /░}"
+  local pct=$1 width=10 eighths filled rem i out=""
+  [ "$pct" -gt 100 ] && pct=100
+  [ "$pct" -lt 0 ] && pct=0
+  eighths=$((pct * width * 8 / 100))
+  filled=$((eighths / 8)); rem=$((eighths % 8))
+  local partials=("" "▏" "▎" "▍" "▌" "▋" "▊" "▉")
+  for ((i=0; i<width; i++)); do
+    if [ "$i" -lt "$filled" ]; then out+="█"
+    elif [ "$i" -eq "$filled" ] && [ "$rem" -gt 0 ]; then out+="${partials[$rem]}"
+    else out+=" "; fi
+  done
+  printf '%s' "$out"
 }
 BAR=$(make_bar "$PCT")
 
@@ -77,8 +88,8 @@ rl_color() {
 RL_SECTION=""
 if [ "$RL_HAS" = "true" ]; then
   RL_5H_BAR=$(make_bar "$RL_5H_PCT"); RL_7D_BAR=$(make_bar "$RL_7D_PCT")
-  RL_5H_FMT="5H: $(rl_color "$RL_5H_PCT")${RL_5H_BAR}${RESET} ${RL_5H_PCT}% ($(fmt_reset "$RL_5H_RESET"))"
-  RL_7D_FMT="7D: $(rl_color "$RL_7D_PCT")${RL_7D_BAR}${RESET} ${RL_7D_PCT}% ($(fmt_reset "$RL_7D_RESET"))"
+  RL_5H_FMT="5H: ${TRACK}$(rl_color "$RL_5H_PCT")${RL_5H_BAR}${RESET} ${RL_5H_PCT}% ($(fmt_reset "$RL_5H_RESET"))"
+  RL_7D_FMT="7D: ${TRACK}$(rl_color "$RL_7D_PCT")${RL_7D_BAR}${RESET} ${RL_7D_PCT}% ($(fmt_reset "$RL_7D_RESET"))"
   RL_SECTION=" | ${RL_5H_FMT} | ${RL_7D_FMT}"
 fi
 
@@ -121,4 +132,4 @@ if [ -r "$DOPPLER_YAML" ]; then
 fi
 
 echo -e "📁 ${DIR_SHORT}$BRANCH$DOPPLER"
-echo -e "Context: ${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%)${RL_SECTION}"
+echo -e "Context: ${TRACK}${BAR_COLOR}${BAR}${RESET} ${TOKENS_FMT} (${PCT}%)${RL_SECTION}"
