@@ -6,6 +6,12 @@
 
 - Use the context7 MCP to look up library documentation before searching the web, use web search as a fallback. If you get irrelevant results in your first 2 tries with context7, fall back to web search.
 
+# Coding Preferences
+
+- Do not stay excessively local in your reasoning.
+
+- Wherever practical, prefer trying to make bad states impossible before adding fallbacks / defensive programming.
+
 ## Git
 
 - **Don't commit or push unless the user explicitly tells you to.** - The user prefers to review code before committing. Finishing an implementation is not a cue to commit — stop at staged changes and let the user review first. Permission to commit/push once does not carry forward to later changes; wait to be told each time.
