@@ -1,8 +1,9 @@
 {
+  "model": "claude-fable-5[1m]",
+  "effortLevel": "xhigh",
   "env": {
     "CLAUDE_CODE_NO_FLICKER": "1"
   },
-  "hooks": {},
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
@@ -12,27 +13,6 @@
     "type": "command",
     "command": "~/.claude/subagent-statusline.sh"
   },
-  "enabledPlugins": {
-    "plannotator@plannotator": true
-  },
-  "extraKnownMarketplaces": {
-    "plannotator": {
-      "source": {
-        "source": "github",
-        "repo": "backnotprop/plannotator"
-      }
-    }
-  },
-  "effortLevel": "xhigh",
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  },
   "skipDangerousModePermissionPrompt": true,
-  "theme": "auto",
-  "editorMode": "normal",
-  "remoteControlAtStartup": true,
-  "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "voiceEnabled": true
+  "inputNeededNotifEnabled": true
 }
