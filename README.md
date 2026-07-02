@@ -13,3 +13,4 @@
 
 - [QLMarkdown: Quick Look for Markdown](https://github.com/sbarex/QLMarkdown)
 - [Prezto: zsh configuration framework](https://github.com/sorin-ionescu/prezto) - `~/.zprezto` is an upstream clone; only the customizations above are tracked here
+- [SignalShifter: Audio input and output control from macOS menu bar](https://apps.apple.com/us/app/signal-shifter/id6446061552?mt=12)
