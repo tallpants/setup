@@ -10,6 +10,7 @@ notify-on-command-finish-after = 1m
 
 cursor-style = block
 shell-integration-features = no-cursor
+cursor-click-to-move = true
 
 window-padding-x = 15
 window-padding-y = 15
@@ -20,10 +21,11 @@ mouse-scroll-multiplier = 1
 
 # macOS natural text editing
 keybind = opt+backspace=text:\x17
+keybind = super+c=copy_to_clipboard
 
 # Play nice when SSHing into hosts that don't know `xterm-ghostty` in terminfo
 shell-integration-features = ssh-env,ssh-terminfo
 
 auto-update = check
 
-theme = dark:VS Code Dark Modern,light:GitHub Light Default
+theme = VS Code Dark Modern
