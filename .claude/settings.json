@@ -5,7 +5,8 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
+  "effortLevel": "xhigh",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
@@ -15,7 +16,6 @@
     "type": "command",
     "command": "~/.claude/subagent-statusline.sh"
   },
-  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "inputNeededNotifEnabled": true
 }
