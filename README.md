@@ -2,7 +2,7 @@
 |------|-------------|
 | `.claude/*` | `~/.claude/*` |
 | `.claude.json` | `~/.claude.json` |
-| `.codex/AGENTS.md` | `~/.codex/AGENTS.md` |
+| `.codex/*` | `~/.codex/*` |
 | `.zprofile` | `~/.zprofile` (base configuration) |
 | `.zprofile_branch` | `~/.zprofile` (work-specific configuration - needs to be merged with base) |
 | `.zpreztorc_custom` | `~/.zpreztorc` (Prezto customizations only - deltas to merge into the stock Prezto template) |

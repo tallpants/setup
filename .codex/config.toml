@@ -1,0 +1,22 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+
+[features]
+memories = true
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[desktop]
+followUpQueueMode = "queue"
+show-context-window-usage = true
+usePointerCursors = true
+dock-icon-preference = "codex-system"
+git-branch-prefix = "tallpants/codex"
+git-pull-request-merge-method = "squash"
+
+[desktop.appearanceLightChromeTheme.fonts]
+code = '"Hack"'
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"Hack"'
