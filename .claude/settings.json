@@ -6,7 +6,6 @@
     "defaultMode": "auto"
   },
   "model": "opus[1m]",
-  "effortLevel": "xhigh",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
@@ -15,6 +14,11 @@
   "subagentStatusLine": {
     "type": "command",
     "command": "~/.claude/subagent-statusline.sh"
+  },
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
   },
   "skipDangerousModePermissionPrompt": true,
   "inputNeededNotifEnabled": true,
