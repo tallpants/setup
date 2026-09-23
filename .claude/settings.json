@@ -17,5 +17,6 @@
     "command": "~/.claude/subagent-statusline.sh"
   },
   "skipDangerousModePermissionPrompt": true,
-  "inputNeededNotifEnabled": true
+  "inputNeededNotifEnabled": true,
+  "remoteControlAtStartup": true
 }
