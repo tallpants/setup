@@ -9,6 +9,7 @@
 | `prompt_sorindoppler_setup` | `~/.zprezto/modules/prompt/functions/prompt_sorindoppler_setup` (custom Prezto prompt theme - sorin fork showing the active Doppler config; set via `prompt sorindoppler`) |
 | `ghostty_config` | `~/.config/ghostty/config` |
 | `ghostty-themes/*` | `~/.config/ghostty/themes/*` |
+| `zed_settings.json` | `~/.config/zed/settings` |
 
 ### Misc. Tooling
 
