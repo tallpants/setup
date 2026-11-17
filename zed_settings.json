@@ -1,0 +1,64 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "suggest_extensions": false,
+  "colorize_brackets": true,
+  "proxy": "",
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+  "indent_guides": {
+    "background_coloring": "indent_aware",
+    "coloring": "indent_aware"
+  },
+  "tab_size": 2,
+  "vim": {
+    "use_smartcase_find": true
+  },
+  "relative_line_numbers": "enabled",
+  "auto_signature_help": false,
+  "cursor_animation": {
+    "enabled": false
+  },
+  "buffer_font_family": "Cascadia Code",
+  "collaboration_panel": {
+    "button": false
+  },
+  "git_panel": {
+    "tree_view": true,
+    "group_by": "staging",
+    "dock": "left"
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+  "icon_theme": "Material Icon Theme",
+  "disable_ai": true,
+  "session": {
+    "trust_all_worktrees": false
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "vim_mode": true,
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Ayu Dark",
+  },
+  "lsp_document_colors": "background",
+  "title_bar": {
+    "show_sign_in": false
+  }
+}
