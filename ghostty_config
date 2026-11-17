@@ -1,8 +1,8 @@
-font-family = JetBrains Mono
-font-size = 12
+font-family = Cascadia Code
+font-size = 13
 font-feature = -calt,-liga,-dlig
 font-thicken = true
-adjust-cell-height = 30%
+adjust-cell-height = 40%
 
 notify-on-command-finish = unfocused
 notify-on-command-finish-action = bell,notify
